@@ -93,6 +93,11 @@ nacionalidad(naomi,japonesa).
 padre(X, Y) :- progenitor(Y, X), hombre(Y).	
 madre(X, Y) :- progenitor(Y, X), mujer(Y).
 
+hijosl(X, LISTA) :- 	
+	findall(Y, (progenitor(X, Y), hombre(Y)), LISTA).
+hijasl(X, LISTA) :- 
+    findall(Y, (progenitor(X, Y), mujer(Y)), LISTA).
+
 diferente(X, Y) :- not(igual(X, Y)).
 igual(X, X).
 
@@ -228,3 +233,11 @@ habla(X, Idioma) :- progenitor(Madre, X), idioma(Madre, Idioma).
 idiomas_que_habla(Persona, Idiomas) :-
     findall(Idioma, habla(Persona, Idioma), IdiomasSinDuplicados),
     list_to_set(IdiomasSinDuplicados, Idiomas).
+
+
+
+contar(Lista, N) :-
+    length(Lista, N).
+
+cantidadhijos(Lista,N) :- hijosl(Lista,Y),contar(Y, N).
+cantidadhijas(Lista,N) :- hijasl(Lista,Y),contar(Y, N).
